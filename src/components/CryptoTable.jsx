@@ -1,36 +1,38 @@
 import React from 'react';
+import './CryptoTable.css';
 
 function CryptoTable({ trades, isConnected }) {
   const calcularPrecoUSDT = (precoCrypto, quantidadeCrypto) => {
-    const taxaCambio = 1; // Exemplo: 1 Crypto = 1 USDT
-    return parseFloat(precoCrypto) * parseFloat(quantidadeCrypto) * taxaCambio;
+    return parseFloat(precoCrypto) * parseFloat(quantidadeCrypto);
   };
 
   return (
-    <div>
+    <div className="crypto-table-container">
       {isConnected ? (
-        <table className="table table-bordered" style={{ borderColor: 'green' }}>
-          <thead className="thead-dark">
-            <tr>
-              <th scope="col">Preço</th>
-              <th scope="col">Quantidade</th>
-              <th scope="col">Preço em USDT</th>
-              <th scope="col">Hora</th>
-            </tr>
-          </thead> 
-          <tbody>
-            {trades.map((trade, index) => (
-              <tr key={index}>
-                <td>{parseFloat(trade.p).toFixed(2)}</td>
-                <td>{parseFloat(trade.q).toFixed(5)}</td>
-                <td>{calcularPrecoUSDT(trade.p, trade.q).toFixed(2)}</td>
-                <td>{new Date(trade.T).toLocaleTimeString()}</td>
+        <div className="table-wrapper">
+          <table className="crypto-table">
+            <thead>
+              <tr>
+                <th>💰 Preço</th>
+                <th>📊 Quantidade</th>
+                <th>💵 Preço em USDT</th>
+                <th>⏰ Hora</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {trades.map((trade, index) => (
+                <tr key={index}>
+                  <td>${parseFloat(trade.p).toFixed(2)}</td>
+                  <td>{parseFloat(trade.q).toFixed(5)}</td>
+                  <td>${calcularPrecoUSDT(trade.p, trade.q).toFixed(2)}</td>
+                  <td>{new Date(trade.T).toLocaleTimeString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
-        <div>Aguardando conexão...</div>
+        <div className="status-message">🔌 Aguardando conexão...</div>
       )}
     </div>
   );

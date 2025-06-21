@@ -23,7 +23,9 @@ function CryptoTable({ trades, isConnected }) {
           <tbody>
             {trades.map((trade, index) => (
               <tr key={index}>
-                <td>{parseFloat(trade.p).toFixed(2)}</td>
+                <td>
+                {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(trade.p)}
+                </td>
                 <td>{parseFloat(trade.q).toFixed(5)}</td>
                 <td>{calcularPrecoUSDT(trade.p, trade.q).toFixed(2)}</td>
                 <td>{new Date(trade.T).toLocaleTimeString()}</td>
@@ -97,7 +99,7 @@ function App() {
 
   return (
     <div className="container mt-5">
-      <h1 className="text-center mb-4" style={{Color: 'green'}}>Dashboard de Criptomoedas <img src={Icon} alt="Crypto Icon"  /></h1>
+      <h1 className="text-center mb-4" style={{Color: 'green'}}>Cripto Dashboard<img src={Icon} alt="Crypto Icon" style={{ width: '180px', height: '180px' }} /></h1>
       <div className="row">
         <div className="col">
           <h2 className="mb-3">Bitcoin (BTC)</h2>
